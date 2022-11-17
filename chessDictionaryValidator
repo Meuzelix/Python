@@ -1,0 +1,112 @@
+import sys
+emptyChessBoard = {'a8': ' ', 'b8': ' ', 'c8': ' ', 'd8': ' ', 'e8': ' ', 'f8': ' ', 'g8': ' ', 'h8': ' ',
+              'a7': ' ', 'b7': ' ', 'c7': ' ', 'd7': ' ', 'e7': ' ', 'f7': ' ', 'g7': ' ', 'h7': ' ',
+              'a6': ' ', 'b6': ' ', 'c6': ' ', 'd6': ' ', 'e6': ' ', 'f6': ' ', 'g6': ' ', 'h6': ' ',
+              'a5': ' ', 'b5': ' ', 'c5': ' ', 'd5': ' ', 'e5': ' ', 'f5': ' ', 'g5': ' ', 'h5': ' ',
+              'a4': ' ', 'b4': ' ', 'c4': ' ', 'd4': ' ', 'e4': ' ', 'f4': ' ', 'g4': ' ', 'h4': ' ',
+              'a3': ' ', 'b3': ' ', 'c3': ' ', 'd3': ' ', 'e3': ' ', 'f3': ' ', 'g3': ' ', 'h3': ' ',
+              'a2': ' ', 'b2': ' ', 'c2': ' ', 'd2': ' ', 'e2': ' ', 'f2': ' ', 'g2': ' ', 'h2': ' ',
+              'a1': ' ', 'b1': ' ', 'c1': ' ', 'd1': ' ', 'e1': ' ', 'f1': ' ', 'g1': ' ', 'h1': ' '
+              }
+chessBoard = {'a8': 'brook', 'b8': 'bknight', 'c8': 'bbishop', 'd8': 'bqueen', 'e8': 'bking', 'f8': 'bbishop', 'g8': 'bknight', 'h8': 'brook',
+              'a7': 'bpawn', 'b7': 'bpawn', 'c7': 'bpawn', 'd7': 'bpawn', 'e7': 'bpawn', 'f7': 'bpawn', 'g7': 'bpawn', 'h7': 'bpawn',
+              'a6': ' ', 'b6': ' ', 'c6': ' ', 'd6': ' ', 'e6': ' ', 'f6': ' ', 'g6': ' ', 'h6': ' ',
+              'a5': ' ', 'b5': ' ', 'c5': ' ', 'd5': ' ', 'e5': ' ', 'f5': ' ', 'g5': ' ', 'h5': ' ',
+              'a4': ' ', 'b4': ' ', 'c4': ' ', 'd4': ' ', 'e4': ' ', 'f4': ' ', 'g4': ' ', 'h4': ' ',
+              'a3': ' ', 'b3': ' ', 'c3': ' ', 'd3': ' ', 'e3': ' ', 'f3': ' ', 'g3': ' ', 'h3': ' ',
+              'a2': 'wpawn', 'b2': 'wpawn', 'c2': 'wpawn', 'd2': 'wpawn', 'e2': 'wpawn', 'f2': 'wpawn', 'g2': 'wpawn', 'h2': 'wpawn',
+              'a1': 'wrook', 'b1': 'wknight', 'c1': 'wbishop', 'd1': 'wqueen', 'e1': 'wking', 'f1': 'wbishop', 'g1': 'wknight', 'h1': 'wrook'
+              }
+
+def chessDictionaryValidator(dictionaryArgument):
+    numBlackPawns = 0
+    numBlackKnights = 0
+    numBlackBishops = 0
+    numBlackRooks = 0
+    numBlackQueens = 0
+    numBlackKings = 0
+
+    numWhitePawns = 0
+    numWhiteKnights = 0
+    numWhiteBishops = 0
+    numWhiteRooks = 0
+    numWhiteQueens = 0
+    numWhiteKings = 0
+
+    validSpace = 0
+
+    for space, piece in dictionaryArgument.items():
+        if piece[0] == 'b':
+            if piece[1:7] == 'pawn':
+                numBlackPawns += 1
+            if piece[1:7] == 'knight':
+                numBlackKnights += 1
+            if piece[1:7] == 'bishop':
+                numBlackBishops += 1
+            if piece[1:7] == 'rook':
+                numBlackRooks += 1
+            if piece[1:7] == 'queen':
+                numBlackQueens += 1
+            if piece[1:7] == 'king':
+                numBlackKings += 1
+        if piece[0] == 'w':
+            if piece[1:7] == 'pawn':
+                numWhitePawns += 1
+            if piece[1:7] == 'knight':
+                numWhiteKnights += 1
+            if piece[1:7] == 'bishop':
+                numWhiteBishops += 1
+            if piece[1:7] == 'rook':
+                numWhiteRooks += 1
+            if piece[1:7] == 'queen':
+                numWhiteQueens += 1
+            if piece[1:7] == 'king':
+                numWhiteKings += 1
+
+        if space[0] in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']:
+            space = space[1:]
+            if int(space) in range(1, 9):
+                validSpace += 1
+
+    numBlackPieces = numBlackPawns + numBlackKnights + numBlackBishops + numBlackRooks + numBlackQueens + numBlackKings
+    numWhitePieces = numWhitePawns + numWhiteKnights + numWhiteBishops + numWhiteRooks + numWhiteQueens + numWhiteKings
+
+    #Error-checking
+    if numBlackPieces > 16:
+        print('Error: more than 16 black pieces.')
+        sys.exit()
+    elif numBlackPawns > 8:
+        print('Error: more than 8 black pawns')
+        sys.exit()
+    elif numBlackKings != 1:
+        print('Error: missing black king.')
+        sys.exit()
+    elif numWhitePieces > 16:
+        print('Error: more than 16 white pieces.')
+        sys.exit()
+    elif numWhitePawns > 8:
+        print('Error: more than 8 white pawns')
+        sys.exit()
+    elif numWhiteKings != 1:
+        print('Error: missing white king.')
+        sys.exit()
+    elif validSpace != 64:
+        print('Error: Inproper space notation, not exactly 64 squares.')
+    else:
+        print('The are a total number of ' + str(numBlackPieces) + ' black pieces. Consisting of:')
+        print(' - ' + str(numBlackPawns) + ' pawn(s)')
+        print(' - ' + str(numBlackKnights) + ' knight(s)')
+        print(' - ' + str(numBlackBishops) + ' bishop(s)')
+        print(' - ' + str(numBlackRooks) + ' rook(s)')
+        print(' - ' + str(numBlackQueens) + ' queen(s)')
+        print(' - ' + str(numBlackKings) + ' king(s)')
+        print()
+        print('The are a total number of ' + str(numWhitePieces) + ' white pieces. Consisting of:')
+        print(' - ' + str(numWhitePawns) + ' pawn(s)')
+        print(' - ' + str(numWhiteKnights) + ' knight(s)')
+        print(' - ' + str(numWhiteBishops) + ' bishop(s)')
+        print(' - ' + str(numWhiteRooks) + ' rook(s)')
+        print(' - ' + str(numWhiteQueens) + ' queen(s)')
+        print(' - ' + str(numWhiteKings) + ' king(s)')
+
+chessDictionaryValidator(chessBoard)
