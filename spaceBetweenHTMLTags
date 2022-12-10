@@ -1,0 +1,65 @@
+import re
+import openpyxl
+
+# Regular Expressions to search HTML tags
+# Opening tags
+# regexSearchBeginTag = re.compile(r'(<)(\s)*([a-z]){1,6}(\s)*(>)')
+# regexSearchEndTag = re.compile(r'(<)(\s)*(/)(\s)*([a-z]){1,6}(\s)*(>)')
+regexSearch_LI_Beg = re.compile(r'(<)(\s)*(\s)*(li)(\s)*(>)')
+regexSearch_UL_Beg = re.compile(r'(<)(\s)*(\s)*(ul)(\s)*(>)')
+regexSearch_OL_Beg = re.compile(r'(<)(\s)*(\s)*(ol)(\s)*(>)')
+regexSearch_STRONG_Beg = re.compile(r'(<)(\s)*(\s)*(strong)(\s)*(>)')
+regexSearch_B_Beg = re.compile(r'(<)(\s)*(\s)*(b)(\s)*(>)')
+regexSearch_P_Beg = re.compile(r'(<)(\s)*(\s)*(p)(\s)*(>)')
+regexSearch_H3_Beg = re.compile(r'(<)(\s)*(\s)*(p)(\s)*(>)')
+
+# Closing tags
+regexSearch_LI_End = re.compile(r'(<)(\s)*(/)(\s)*(li)(\s)*(>)')
+regexSearch_UL_End = re.compile(r'(<)(\s)*(/)(\s)*(ul)(\s)*(>)')
+regexSearch_OL_End = re.compile(r'(<)(\s)*(/)(\s)*(ol)(\s)*(>)')
+regexSearch_STRONG_End = re.compile(r'(<)(\s)*(/)(\s)*(strong)(\s)*(>)')
+regexSearch_B_End = re.compile(r'(<)(\s)*(/)(\s)*(b)(\s)*(>)')
+regexSearch_P_End = re.compile(r'(<)(\s)*(/)(\s)*(p)(\s)*(>)')
+regexSearch_H3_End = re.compile(r'(<)(\s)*(/)(\s)*(h3)(\s)*(>)')
+
+# BR tag
+regexSearch_BR = re.compile(r'(<)(\s)*(\s)*(br)(\s)*(>)')
+
+# Open Excel workbook
+wb = openpyxl.load_workbook("C:\\Users\\Rutger Meuzelaar\\Desktop\\Testpyxl.xlsx")
+sheet = wb['Sheet1']
+
+# Loop through Excel rows to replace HTML tags with spaces in between them
+for i in range(2, sheet.max_row):
+    while True:
+        try:
+            if sheet.cell(row=i, column=1).value is None:
+                value = ""
+            else:
+                value = str(sheet.cell(row=i, column=1).value)
+
+            # Replace opening HTML tags with spaces to correct opening HTML tags
+            value = re.sub(regexSearch_LI_Beg, "<li>", string=value)
+            value = re.sub(regexSearch_UL_Beg, "<ul>", string=value)
+            value = re.sub(regexSearch_OL_Beg, "<ol>", string=value)
+            value = re.sub(regexSearch_STRONG_Beg, "<strong>", string=value)
+            value = re.sub(regexSearch_B_Beg, "<b>", string=value)
+            value = re.sub(regexSearch_P_Beg, "<p>", string=value)
+            value = re.sub(regexSearch_H3_Beg, "<h3>", string=value)
+
+            # Replace closing HTML tags with spaces to correct closing HTML tags
+            value = re.sub(regexSearch_LI_End, "</li>", string=value)
+            value = re.sub(regexSearch_UL_End, "</ul>", string=value)
+            value = re.sub(regexSearch_OL_End, "</ol>", string=value)
+            value = re.sub(regexSearch_STRONG_End, "</strong>", string=value)
+            value = re.sub(regexSearch_B_End, "</b>", string=value)
+            value = re.sub(regexSearch_P_End, "</p>", string=value)
+            value = re.sub(regexSearch_H3_End, "</h3>", string=value)
+
+            # Replace br HTML tag with spaces to correct br HTML tag
+            value = re.sub(regexSearch_BR, "<br>", string=value)
+
+        finally:
+            break
+
+    print(value)
